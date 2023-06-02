@@ -1,0 +1,165 @@
+Messages:
+  permission-error: "&cVocê não tem permissão para executar tal ação."
+  permission-error-limit: "&cVocê não tem permissão para usar esse ativador de limite de venda."
+  permission-error-booster: "&cVocê não tem permissão para utilizar esse booster."
+  player-offline: "&cO jogador se encontra offline."
+  number-invalid: "&cEsse número é inválido."
+  limit-used: "&aVocê adicionou ({limit-value}) ao limite de venda e agora está com {player-limit-value}."
+  limit-max: "&cVocê ja atingiu o limite máximo de venda!"
+  limit-view: "&aO seu limite de vendas é de {limit}."
+  limit-not-found: "&aO ID {type} não é um limite de venda."
+  limit-gived: "&aVocê entregou o limite de venda {type} para o jogador {player}."
+  booster-used: "&aVocê ativou um multiplicador de drops ({multiplier}) pelo tempo ({time})."
+  booster-view: "&aSeu multiplicador no momento é de: {multiplier}"
+  booster-not-found: "&cTipo de booster não encontrado."
+  booster-gived: "&aVocê entregou o booster {type} para o jogador {player}."
+  drops-add: "&6&lDROPS &f-> &aForam adicionados {amount} drops de {drop-type} em seu armazém."
+  drops-sell: "&aVocê vendeu {amount}x itens do tipo {item} por {price}."
+  drops-sellall: "&aVocê vendeu todos os {amount}x itens por &2R$ &f{price}&a."
+  drops-no-friend: "&cEsse jogador não te adicionou como amigo."
+  armazem-max: "&6&lDROPS &f-> &cSeu armazém está cheio, venda os itens acumulados!"
+  friends-0: "&cVocê não possui nenhum amigo adicionado ao seu armazém."
+  friends-remove: "&cVocê retirou o acesso de {player} do seu armazém."
+  friends-add: "&aVocê deu acesso do seu armazém para o jogador {player}."
+  friends-max: "&cVocê atingiu ao limite máximo de amigos."
+  can-collect: "&7Digite a quantidade que deseja coletar."
+  cancel: "&cOperação cancelada com sucesso."
+  drop-insufficient: "&cVocê não tem drops suficientes para essa operação."
+  space-insufficient: "&cVocê não tem espaço suficiente no seu inventário."
+Settings:
+  #NÃO SUPORTA KILL-STEP
+  stack-mobs: JH_StackMobs #O plugin suporta "JH_StackMobs" e "StackMobs" (spigot)
+  break: true
+  kill: true
+  plot-drop: true
+  world-plot: "terrenos"
+  friends:
+    toggle: true
+    max: 5
+  format:
+    - ",1.0"
+    - "K,1000.0"
+    - "M,1000000.0"
+    - "B,1000000000.0"
+    - "T,1000000000000.0"
+    - "QA,1000000000000.0"
+    - "QI,1000000000000000.0"
+    - "SEX,1000000000000000000.0"
+    - "SEP,1000000000000000000000.0"
+Bonus:
+  permission-dois-use: 20 # permissão (cada "-" conta como se fosse um ".") e porcentagem
+  permission-use-vip: 10 # permissão (cada "-" conta como se fosse um ".") e porcentagem
+  permission-membro: 0
+Limits:
+  default:
+    - "member.vip.prime:100000"
+    - "member.member:1000"
+  max: 100000000000 #Retire essa área para infinito
+  list: #Crie quantos quiser
+    item-one:
+      id: 1
+      data: 0
+      name: "&eLimite de venda"
+      lore:
+        - "&eUtilize-me para aumentar seu"
+        - "&elimite de venda."
+      value: 10000 #aumenta em 10 mil
+      permission: "member.permission" # pode ou não usar
+Boosters:
+  default:
+    - "member.vip.prime:2.0"
+    - "member.member:1.0"
+  list:
+    bs1:
+      multiplier: 1.5
+      time: 300 #segundos// exclua essa seção para infinito
+      permission: "member.permission" #pode ou não usar
+      name: "&aBooster"
+      id: 1
+      data: 0
+      lore:
+        - ""
+        - "&aBooster 1.5x"
+Drops:
+  dropOne:
+    id: 57
+    data: 0
+    unit-sales-value: "100M"
+    type: BREAK #suporta BREAK, PLOT_DROP, KILL
+    canCollect: false # Coletar do /drops
+    canSell: true # Vender no /drops
+    drop-item-menu:
+      id: 57
+      data: 0
+      name: "&bDiamante"
+      lore:
+        - "&ePreço unitário: {price-sell-unit}"
+        - "&eQuantidade: {amount}"
+        - "&ePreço de venda: {price-sell-all}"
+      amount: 1
+  dropTwo:
+    id: 277
+    data: 0
+    mob: ZOMBIE
+    unit-sales-value: "100M,10K"
+    type: KILL
+    canCollect: false
+    canSell: true
+    drop-item-menu:
+      id: 277
+      data: 0
+      name: "&eCarne de Zumbi"
+      lore:
+        - "&ePreço unitário: {price-sell-unit}"
+        - "&eQuantidade: {amount}"
+        - "&ePreço de venda: {price-sell-all}"
+      amount: 2
+  dropThree:
+    id: 81
+    data: 0
+    unit-sales-value: "100B,10M,10K"
+    type: PLOT_DROP
+    canCollect: true
+    canSell: false
+    drop-item-menu:
+      id: 81
+      data: 0
+      name: "&2Cacto"
+      lore:
+        - "&ePreço unitário: {price-sell-unit}"
+        - "&eQuantidade: {amount}"
+        - "&ePreço de venda: {price-sell-all}"
+      amount: 3
+Inventory:
+  sell: # Tenha cuidado ao configurar
+    name: "&aMenu de vendas."
+    rows: 6
+    slotsDropSell: "10,11,12,13,14,15,16,19,20,21,22,23,24,25,28,29,30,31,32,32,34"
+    items:
+      playerStats:
+        slot: 4 #válido a primeira e a última row
+        id: 397
+        data: 3
+        skull-owner: "{playername}"
+        name: "&e{playername}"
+        lore:
+          - "&fLimite de Venda: &7{limit}"
+          - "&fBooster de Drops: &7{multiplier}"
+          - "&fBônus de venda: &7{bonus}%"
+      sellAll:
+        slot: 51 #válido a primeira e a última row
+        id: 339
+        data: 0
+        name: "&eVender tudo"
+        lore:
+          - "&aClique aqui para vender {drops}"
+          - "&apor &2R$ &f{total}&a."
+      autoSell:
+        slot: 47 #válido a primeira e a última row
+        id: 154
+        data: 0
+        name: "&aAuto vender"
+        lore:
+          - "&eEstado: {state}"
+          - "&aClique para {future-state} a"
+          - "&aAuto-venda."

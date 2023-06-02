@@ -1,0 +1,7 @@
+name: ItemSale
+main: com.leonardo.minecraft.itemsale.ItemSale
+version: 1.0.0
+author: Leonardo
+description: Item sale plugin
+softdepend: [Vault]
+depend: [ServerCore]
