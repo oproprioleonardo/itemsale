@@ -15,7 +15,7 @@ public class ItemSaleService {
     private final PlayerStorageRepository playerStorageRepository;
     private final ItemStorageRepository itemStorageRepository;
     private final VirtualItemRepository virtualItemRepository;
-    private final Set<PlayerStorage> playerStorageCache = new HashSet<>();
+    private final Set<PlayerStorage> cache = new HashSet<>();
 
     public ItemSaleService(PlayerStorageRepository playerStorageRepository, ItemStorageRepository itemStorageRepository, VirtualItemRepository virtualItemRepository) {
         this.playerStorageRepository = playerStorageRepository;
@@ -24,7 +24,7 @@ public class ItemSaleService {
     }
 
     public PlayerStorage findByUsername(String username) {
-        return playerStorageCache.stream()
+        return cache.stream()
                 .filter(playerStorage -> playerStorage.getUsername().equals(username.toLowerCase()))
                 .findFirst()
                 .orElseGet(() -> {
@@ -34,23 +34,30 @@ public class ItemSaleService {
                     final ItemStorage itemStorage = itemStorageRepository.readByPlayerStorage(storage);
                     final Set<VirtualItem> virtualItems = virtualItemRepository.findAllByItemStorage(itemStorage);
                     itemStorage.setLoot(virtualItems);
+                    itemStorage.removeUselessLoot();
+                    itemStorage.loadDefaultLoot();
                     storage.setItemStorage(itemStorage);
-                    playerStorageCache.add(storage);
+                    cache.add(storage);
                     return storage;
                 });
     }
 
     public boolean existsUsername(String username) {
-        return playerStorageCache
+        return cache
                 .stream()
                 .anyMatch(playerStorage -> playerStorage.getUsername().equals(username.toLowerCase()))
                 || playerStorageRepository.existsUsername(username);
     }
 
     public PlayerStorage save(PlayerStorage storage) {
+        this.cache.removeIf(playerStorage -> playerStorage.getId().equals(storage.getId()));
         this.playerStorageRepository.save(storage);
         this.itemStorageRepository.save(storage.getItemStorage());
         this.virtualItemRepository.saveAll(storage.getItemStorage().getLoot());
         return storage;
+    }
+
+    public void putOnCache(PlayerStorage storage) {
+        this.cache.add(storage);
     }
 }

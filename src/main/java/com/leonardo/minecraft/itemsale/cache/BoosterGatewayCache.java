@@ -9,7 +9,7 @@ import java.util.Optional;
 @UtilityClass
 public class BoosterGatewayCache {
 
-    private static final HashSet<BoosterGateway> BOOSTERS = new HashSet<>();
+    public static final HashSet<BoosterGateway> BOOSTERS = new HashSet<>();
 
     public static void put(BoosterGateway booster) {
         BOOSTERS.add(booster);

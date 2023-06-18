@@ -53,6 +53,10 @@ public class ItemBuilder {
         this.itemStack = new ItemStack(m, amount, data);
     }
 
+    public ItemBuilder(Material m, short data) {
+        this.itemStack = new ItemStack(m, 1, data);
+    }
+
     public ItemBuilder setType(Material material) {
         if (itemStack == null) itemStack = new ItemStack(material);
         else itemStack.setType(material);

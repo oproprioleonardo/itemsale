@@ -9,7 +9,7 @@ import java.util.Optional;
 @UtilityClass
 public class LootGatewayCache {
 
-    private static final HashSet<LootGateway> LOOT_GATEWAYS = new HashSet<>();
+    public static final HashSet<LootGateway> LOOT_GATEWAYS = new HashSet<>();
 
     public static void put(LootGateway loot) {
         LOOT_GATEWAYS.add(loot);

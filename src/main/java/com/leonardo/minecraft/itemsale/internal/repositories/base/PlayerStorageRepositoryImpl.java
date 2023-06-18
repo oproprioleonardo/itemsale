@@ -160,13 +160,13 @@ public abstract class PlayerStorageRepositoryImpl implements PlayerStorageReposi
     @Override
     public PlayerStorage readByUsername(String username) {
         final PlayerStorage ps = new PlayerStorage();
+        ps.setUsername(username);
         try (final Connection con = this.getConnectionProvider().getConnection()) {
-            final PreparedStatement st = con.prepareStatement("SELECT * FROM tb_player_storage WHERE username = ?");
+            final PreparedStatement st = con.prepareStatement("SELECT (id, sale_bonus, loot_multiplier) FROM tb_player_storage WHERE username = ?");
             st.setString(1, username);
             final ResultSet rs = st.executeQuery();
             if (rs.next()) {
                 ps.setId(rs.getInt("id"));
-                ps.setUsername(rs.getString("username"));
                 ps.setSaleBonus(rs.getFloat("sale_bonus"));
                 ps.setLootMultiplier(rs.getFloat("loot_multiplier"));
             }

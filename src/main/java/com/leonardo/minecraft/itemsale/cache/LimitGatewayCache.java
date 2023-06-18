@@ -9,7 +9,7 @@ import java.util.Optional;
 @UtilityClass
 public class LimitGatewayCache {
 
-    private static final HashSet<LimitGateway> LIMIT_GATEWAYS = new HashSet<>();
+    public static final HashSet<LimitGateway> LIMIT_GATEWAYS = new HashSet<>();
 
     public static void put(LimitGateway limit) {
         LIMIT_GATEWAYS.add(limit);

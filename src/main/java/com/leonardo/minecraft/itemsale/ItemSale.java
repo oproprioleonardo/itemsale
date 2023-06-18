@@ -17,6 +17,8 @@ import com.leonardo.minecraft.itemsale.internal.repositories.psql.ItemStorageRep
 import com.leonardo.minecraft.itemsale.internal.repositories.psql.PlayerStorageRepositoryPsql;
 import com.leonardo.minecraft.itemsale.internal.repositories.psql.VirtualItemRepositoryPsql;
 import com.leonardo.minecraft.itemsale.internal.services.ItemSaleService;
+import com.leonardo.minecraft.itemsale.listeners.JoinListener;
+import com.leonardo.minecraft.itemsale.listeners.QuitListener;
 import com.leonardo.minecraft.itemsale.models.enums.LootType;
 import com.leonardo.minecraft.itemsale.models.gateway.BoosterGateway;
 import com.leonardo.minecraft.itemsale.models.gateway.LimitGateway;
@@ -25,6 +27,7 @@ import com.leonardo.minecraft.itemsale.utils.ItemBuilder;
 import com.leonardo.minecraft.itemsale.utils.ItemSaleUtils;
 import fr.minuskube.inv.ClickableItem;
 import lombok.Getter;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -67,12 +70,17 @@ public class ItemSale extends JavaPlugin {
         this.populateLootGatewayCache();
         this.populateLimitGatewayCache();
         this.populateBoosterGatewayCache();
-
+        this.registerListeners();
     }
 
     @Override
     public void onDisable() {
 
+    }
+
+    private void registerListeners() {
+        Bukkit.getPluginManager().registerEvents(new JoinListener(this.itemSaleService, this), this);
+        Bukkit.getPluginManager().registerEvents(new QuitListener(this.itemSaleService), this);
     }
 
     private FileConfiguration provideConfig(final File customConfigFile) {

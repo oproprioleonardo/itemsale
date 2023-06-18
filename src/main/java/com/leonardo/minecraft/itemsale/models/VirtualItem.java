@@ -5,14 +5,13 @@ import lombok.*;
 import java.io.Serializable;
 import java.util.Objects;
 
-@Builder
 @NoArgsConstructor
 @Getter
 @Setter
 public class VirtualItem implements Serializable {
 
     private Integer id;
-    private String factualItemId;
+    private String keyLootGateway;
     private ItemStorage itemStorage;
     private Double quantity = 0D;
 
@@ -20,8 +19,16 @@ public class VirtualItem implements Serializable {
         this.id = id;
     }
 
-    public VirtualItem(String factualItemId, ItemStorage itemStorage) {
-        this.factualItemId = factualItemId;
+    @Builder
+    public VirtualItem(Integer id, String keyLootGateway, ItemStorage itemStorage, Double quantity) {
+        this.id = id;
+        this.keyLootGateway = keyLootGateway;
+        this.itemStorage = itemStorage;
+        this.quantity = quantity;
+    }
+
+    public VirtualItem(String keyLootGateway, ItemStorage itemStorage) {
+        this.keyLootGateway = keyLootGateway;
         this.itemStorage = itemStorage;
     }
 
@@ -43,19 +50,19 @@ public class VirtualItem implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         VirtualItem that = (VirtualItem) o;
-        return Objects.equals(id, that.id) && Objects.equals(factualItemId, that.factualItemId) && Objects.equals(itemStorage, that.itemStorage);
+        return Objects.equals(id, that.id) && Objects.equals(keyLootGateway, that.keyLootGateway) && Objects.equals(itemStorage, that.itemStorage);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, factualItemId, itemStorage);
+        return Objects.hash(id, keyLootGateway, itemStorage);
     }
 
     @Override
     public String toString() {
         return "VirtualItem{" +
                 "id=" + id +
-                ", factualItemId='" + factualItemId + '\'' +
+                ", keyLootGateway='" + keyLootGateway + '\'' +
                 ", itemStorage=" + itemStorage +
                 ", quantity=" + quantity +
                 '}';

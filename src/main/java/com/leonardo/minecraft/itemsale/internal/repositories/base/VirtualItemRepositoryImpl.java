@@ -62,7 +62,7 @@ public abstract class VirtualItemRepositoryImpl implements VirtualItemRepository
         try (final Connection con = this.getConnectionProvider().getConnection()) {
             final PreparedStatement st = con.prepareStatement("INSERT INTO tb_virtual_item(factual_item_id, quantity, item_storage_id) " +
                     "VALUES (?,?,?)");
-            st.setString(1, object.getFactualItemId());
+            st.setString(1, object.getKeyLootGateway());
             st.setDouble(2, object.getQuantity());
             st.setInt(3, object.getItemStorage().getId());
 
@@ -82,7 +82,7 @@ public abstract class VirtualItemRepositoryImpl implements VirtualItemRepository
             final ResultSet rs = st.executeQuery();
             if (rs.next()) {
                 item.setQuantity(rs.getDouble("quantity"));
-                item.setFactualItemId(rs.getString("factual_item_id"));
+                item.setKeyLootGateway(rs.getString("key_loot_gateway"));
                 item.setItemStorage(new ItemStorage(rs.getInt("item_storage_id")));
             }
 
@@ -130,7 +130,7 @@ public abstract class VirtualItemRepositoryImpl implements VirtualItemRepository
             while (rs.next()) {
                 final VirtualItem item = new VirtualItem(rs.getInt("id"));
                 item.setQuantity(rs.getDouble("quantity"));
-                item.setFactualItemId(rs.getString("factual_item_id"));
+                item.setKeyLootGateway(rs.getString("key_loot_gateway"));
                 item.setItemStorage(itemStorage);
                 items.add(item);
             }
