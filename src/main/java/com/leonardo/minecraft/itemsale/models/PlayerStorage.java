@@ -1,10 +1,15 @@
 package com.leonardo.minecraft.itemsale.models;
 
+import lombok.*;
+
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+@NoArgsConstructor
+@Getter
+@Setter
 public class PlayerStorage implements Serializable {
 
     private Integer id;
@@ -14,66 +19,26 @@ public class PlayerStorage implements Serializable {
     private Set<Boost> boosts = new HashSet<>();
     private ItemStorage itemStorage = new ItemStorage();
 
-    public PlayerStorage() {
-    }
-
     public PlayerStorage(Integer id) {
         this.id = id;
     }
 
-    public PlayerStorage(String username, Float saleBonus, Float lootMultiplier, ItemStorage itemStorage) {
+    @Builder
+    public PlayerStorage(Integer id, String username, Float saleBonus, Float lootMultiplier, ItemStorage itemStorage, Set<Boost> boosts) {
+        this.id = id;
         this.username = username.toLowerCase();
         this.saleBonus = saleBonus;
         this.lootMultiplier = lootMultiplier;
+        this.boosts = boosts;
         this.itemStorage = itemStorage;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getUsername() {
-        return username;
     }
 
     public void setUsername(String username) {
         this.username = username.toLowerCase();
     }
 
-    public Float getSaleBonus() {
-        return saleBonus;
-    }
-
-    public void setSaleBonus(Float saleBonus) {
-        this.saleBonus = saleBonus;
-    }
-
-    public float getLootMultiplier() {
-        return lootMultiplier;
-    }
-
-    public void setLootMultiplier(Float lootMultiplier) {
-        this.lootMultiplier = lootMultiplier;
-    }
-
-    public ItemStorage getItemStorage() {
-        return itemStorage;
-    }
-
-    public void setItemStorage(ItemStorage itemStorage) {
-        this.itemStorage = itemStorage;
-    }
-
-    public Set<Boost> getBoosts() {
-        return boosts;
-    }
-
-    public void setBoosts(Set<Boost> boosts) {
-        this.boosts = boosts;
+    public boolean isPersisted() {
+        return id != 0;
     }
 
     @Override

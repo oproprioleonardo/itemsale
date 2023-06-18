@@ -45,7 +45,8 @@ public abstract class ItemStorageRepositoryImpl implements ItemStorageRepository
     }
 
     @Override
-    public void saveAll(Set<Integer> objects) {
+    public void saveAll(Set<ItemStorage> objects) {
+        objects.forEach(this::save);
     }
 
     protected void saveTemplate(ItemStorage object, PreparedStatement st) throws SQLException {

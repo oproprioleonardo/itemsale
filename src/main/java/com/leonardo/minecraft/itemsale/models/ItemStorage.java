@@ -1,11 +1,18 @@
 package com.leonardo.minecraft.itemsale.models;
 
+import lombok.*;
+
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 public class ItemStorage implements Serializable {
 
     private Integer id;
@@ -13,9 +20,6 @@ public class ItemStorage implements Serializable {
     private PlayerStorage owner;
     private boolean autoSell = false;
     private Set<VirtualItem> loot = new HashSet<>();
-
-    public ItemStorage() {
-    }
 
     public ItemStorage(Integer id) {
         this.id = id;
@@ -30,42 +34,6 @@ public class ItemStorage implements Serializable {
         this.maxCapacity = maxCapacity;
         this.owner = owner;
         this.loot = loot;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public PlayerStorage getOwner() {
-        return owner;
-    }
-
-    public void setOwner(PlayerStorage owner) {
-        this.owner = owner;
-    }
-
-    public boolean isAutoSell() {
-        return autoSell;
-    }
-
-    public void setAutoSell(boolean autoSell) {
-        this.autoSell = autoSell;
-    }
-
-    public Double getMaxCapacity() {
-        return maxCapacity;
-    }
-
-    public void setMaxCapacity(Double maxCapacity) {
-        this.maxCapacity = maxCapacity;
-    }
-
-    public Set<VirtualItem> getLoot() {
-        return loot;
     }
 
     public void setLoot(Set<VirtualItem> loot) {

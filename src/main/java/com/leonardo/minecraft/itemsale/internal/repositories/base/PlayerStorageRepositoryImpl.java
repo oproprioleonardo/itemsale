@@ -1,5 +1,6 @@
 package com.leonardo.minecraft.itemsale.internal.repositories.base;
 
+import com.leonardo.minecraft.core.Core;
 import com.leonardo.minecraft.core.api.database.ConnectionProvider;
 import com.leonardo.minecraft.itemsale.api.repositories.PlayerStorageRepository;
 import com.leonardo.minecraft.itemsale.models.PlayerStorage;
@@ -14,6 +15,7 @@ import java.util.Set;
 public abstract class PlayerStorageRepositoryImpl implements PlayerStorageRepository {
 
     private final ConnectionProvider connectionProvider;
+    private Core core;
 
     public PlayerStorageRepositoryImpl(ConnectionProvider connectionProvider) {
         this.connectionProvider = connectionProvider;
@@ -44,8 +46,8 @@ public abstract class PlayerStorageRepositoryImpl implements PlayerStorageReposi
     }
 
     @Override
-    public void saveAll(Set<Integer> objects) {
-
+    public void saveAll(Set<PlayerStorage> objects) {
+        objects.forEach(this::save);
     }
 
     @Override
@@ -81,6 +83,7 @@ public abstract class PlayerStorageRepositoryImpl implements PlayerStorageReposi
             st.setInt(1, object);
             final ResultSet rs = st.executeQuery();
             if (rs.next()) {
+                ps.setId(rs.getInt("id"));
                 ps.setUsername(rs.getString("username"));
                 ps.setSaleBonus(rs.getFloat("sale_bonus"));
                 ps.setLootMultiplier(rs.getFloat("loot_multiplier"));
@@ -89,7 +92,6 @@ public abstract class PlayerStorageRepositoryImpl implements PlayerStorageReposi
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
 
         return ps;
     }
@@ -143,16 +145,48 @@ public abstract class PlayerStorageRepositoryImpl implements PlayerStorageReposi
 
     @Override
     public boolean existsUsername(String username) {
-        return false;
+        boolean rs = false;
+        try (final Connection con = this.getConnectionProvider().getConnection()) {
+            final PreparedStatement st = con.prepareStatement("SELECT username FROM tb_player_storage WHERE username = ?");
+            st.setString(1, username);
+            rs = st.executeQuery().next();
+            st.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return rs;
     }
 
     @Override
     public PlayerStorage readByUsername(String username) {
-        return null;
+        final PlayerStorage ps = new PlayerStorage();
+        try (final Connection con = this.getConnectionProvider().getConnection()) {
+            final PreparedStatement st = con.prepareStatement("SELECT * FROM tb_player_storage WHERE username = ?");
+            st.setString(1, username);
+            final ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                ps.setId(rs.getInt("id"));
+                ps.setUsername(rs.getString("username"));
+                ps.setSaleBonus(rs.getFloat("sale_bonus"));
+                ps.setLootMultiplier(rs.getFloat("loot_multiplier"));
+            }
+            st.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return ps;
     }
 
     @Override
-    public PlayerStorage deleteByUsername(String username) {
-        return null;
+    public void deleteByUsername(String username) {
+        try (final Connection con = this.getConnectionProvider().getConnection()) {
+            final PreparedStatement st = con.prepareStatement("DELETE * FROM tb_player_storage WHERE username = ?");
+            st.setString(1, username);
+            st.executeUpdate();
+            st.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -85,7 +85,7 @@ Drops:
     id: 57
     data: 0
     unit-sales-value: "100M"
-    type: BREAK #suporta BREAK, PLOT_DROP, KILL
+    type: BREAK #suporta BREAK, KILL
     canCollect: false # Coletar do /drops
     canSell: true # Vender no /drops
     drop-item-menu:
@@ -114,22 +114,6 @@ Drops:
         - "&eQuantidade: {amount}"
         - "&ePreço de venda: {price-sell-all}"
       amount: 2
-  dropThree:
-    id: 81
-    data: 0
-    unit-sales-value: "100B,10M,10K"
-    type: PLOT_DROP
-    canCollect: true
-    canSell: false
-    drop-item-menu:
-      id: 81
-      data: 0
-      name: "&2Cacto"
-      lore:
-        - "&ePreço unitário: {price-sell-unit}"
-        - "&eQuantidade: {amount}"
-        - "&ePreço de venda: {price-sell-all}"
-      amount: 3
 Inventory:
   sell: # Tenha cuidado ao configurar
     name: "&aMenu de vendas."

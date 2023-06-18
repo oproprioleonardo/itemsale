@@ -46,8 +46,8 @@ public abstract class VirtualItemRepositoryImpl implements VirtualItemRepository
     }
 
     @Override
-    public void saveAll(Set<Integer> objects) {
-
+    public void saveAll(Set<VirtualItem> objects) {
+        objects.forEach(this::save);
     }
 
     @Override

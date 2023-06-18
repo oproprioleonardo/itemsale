@@ -1,8 +1,14 @@
 package com.leonardo.minecraft.itemsale.models;
 
+import lombok.*;
+
 import java.io.Serializable;
 import java.util.Objects;
 
+@Builder
+@NoArgsConstructor
+@Getter
+@Setter
 public class VirtualItem implements Serializable {
 
     private Integer id;
@@ -10,48 +16,13 @@ public class VirtualItem implements Serializable {
     private ItemStorage itemStorage;
     private Double quantity = 0D;
 
-    public VirtualItem() {
-    }
-
     public VirtualItem(Integer id) {
         this.id = id;
-    }
-
-    public VirtualItem(String factualItemId) {
-        this.factualItemId = factualItemId;
     }
 
     public VirtualItem(String factualItemId, ItemStorage itemStorage) {
         this.factualItemId = factualItemId;
         this.itemStorage = itemStorage;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getFactualItemId() {
-        return factualItemId;
-    }
-
-    public void setFactualItemId(String factualItemId) {
-        this.factualItemId = factualItemId;
-    }
-
-    public ItemStorage getItemStorage() {
-        return itemStorage;
-    }
-
-    public void setItemStorage(ItemStorage itemStorage) {
-        this.itemStorage = itemStorage;
-    }
-
-    public Double getQuantity() {
-        return Math.floor(quantity);
     }
 
     public void setQuantity(Double quantity) {

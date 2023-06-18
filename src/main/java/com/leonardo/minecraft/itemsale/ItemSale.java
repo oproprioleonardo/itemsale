@@ -2,6 +2,7 @@ package com.leonardo.minecraft.itemsale;
 
 import com.leonardo.minecraft.core.Core;
 import com.leonardo.minecraft.core.api.database.ConnectionProvider;
+import com.leonardo.minecraft.core.api.database.CrudRepository;
 import com.leonardo.minecraft.core.config.DatabaseConfig;
 import com.leonardo.minecraft.core.config.DatabaseName;
 import com.leonardo.minecraft.itemsale.api.repositories.ItemStorageRepository;
@@ -20,6 +21,8 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
+import java.util.Arrays;
+import java.util.List;
 
 @Getter
 public class ItemSale extends JavaPlugin {
@@ -39,7 +42,16 @@ public class ItemSale extends JavaPlugin {
         this.customConfigFile = new File(getDataFolder(), "config.yml");
         this.customConfig = this.provideConfig(this.customConfigFile);
         this.provideRepositories(this.core.getConnectionProvider(), this.core.getDatabaseConfig());
-        this.itemSaleService = this.provideItemSaleService(this.playerStorageRepository, this.itemStorageRepository, this.virtualItemRepository);
+        this.createTables(Arrays.asList(
+                this.playerStorageRepository,
+                this.itemStorageRepository,
+                this.virtualItemRepository
+        ));
+        this.itemSaleService = this.provideItemSaleService(
+                this.playerStorageRepository,
+                this.itemStorageRepository,
+                this.virtualItemRepository
+        );
 
     }
 
@@ -66,6 +78,10 @@ public class ItemSale extends JavaPlugin {
             this.itemStorageRepository = new ItemStorageRepositoryMysql(connectionProvider);
             this.virtualItemRepository = new VirtualItemRepositoryMysql(connectionProvider);
         }
+    }
+
+    private void createTables(final List<CrudRepository<?, ?>> repositories) {
+        repositories.forEach(CrudRepository::createTable);
     }
 
     private ItemSaleService provideItemSaleService(

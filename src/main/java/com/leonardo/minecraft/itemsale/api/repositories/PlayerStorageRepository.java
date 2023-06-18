@@ -9,6 +9,6 @@ public interface PlayerStorageRepository extends CrudRepository<Integer, PlayerS
 
     PlayerStorage readByUsername(String username);
 
-    PlayerStorage deleteByUsername(String username);
+    void deleteByUsername(String username);
 
 }
