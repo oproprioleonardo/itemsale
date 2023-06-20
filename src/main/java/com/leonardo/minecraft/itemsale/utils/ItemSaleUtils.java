@@ -2,9 +2,6 @@ package com.leonardo.minecraft.itemsale.utils;
 
 import com.google.common.collect.Maps;
 import lombok.experimental.UtilityClass;
-import net.minecraft.server.v1_8_R3.IChatBaseComponent;
-import net.minecraft.server.v1_8_R3.PacketPlayOutChat;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -84,14 +81,8 @@ public class ItemSaleUtils {
         return 1;
     }
 
-
-    public static void sendActionBar(final Player p, final String text) {
-        final PacketPlayOutChat packet = new PacketPlayOutChat(IChatBaseComponent.ChatSerializer.a("{\"text\":\"" + text + "\"}"), (byte) 2);
-        ((CraftPlayer) p).getHandle().playerConnection.sendPacket(packet);
-    }
-
     /**
-     * @param p Player online!
+     * @param p         Player online!
      * @param itemStack Há suporte para todos os itens
      */
     public static void giveItem(final Player p, final ItemStack itemStack, Integer amount) {
